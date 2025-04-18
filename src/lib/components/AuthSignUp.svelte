@@ -1,6 +1,5 @@
 <script>
     import BtnAuthSignUp from './BtnAuthSignUp.svelte';
-    import BtnAuthSignUpToggle from './BtnAuthSignUpToggle.svelte';
 
     // Props with default values
     let {
@@ -23,7 +22,7 @@
         submitButtonText = 'Sign Up',
         confirmButtonText = 'Confirm Sign Up',
         loadingText = 'Signing up...',
-        confirmingText = 'Confirming...',
+        confirmingText = 'Verifying...',
         signInText = 'Already have an account? Sign in'
     } = $props();
 
@@ -145,9 +144,11 @@
     {/if}
 
     <div>
-        <BtnAuthSignUpToggle
-            onClick={onToggleSignIn}
-            text={signInText}
-        />
+        <button
+            type="button"
+            onclick={onToggleSignIn}
+        >
+            {signInText}
+        </button>
     </div>
 </div> 

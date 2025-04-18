@@ -1,6 +1,5 @@
 <script>
     import BtnAuthSignIn from './BtnAuthSignIn.svelte';
-    import BtnAuthSignUpToggle from './BtnAuthSignUpToggle.svelte';
 
     // Props with default values
     let { 
@@ -92,10 +91,12 @@
             />
 
             {#if showSignUp}
-                <BtnAuthSignUpToggle
-                    onClick={onSignUp}
-                    text={signUpText}
-                />
+                <button
+                    type="button"
+                    onclick={onSignUp}
+                >
+                    {signUpText}
+                </button>
             {/if}
         </div>
     </form>
