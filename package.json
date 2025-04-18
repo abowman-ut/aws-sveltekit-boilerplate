@@ -17,6 +17,10 @@
 		"vite": "^6.2.5"
 	},
 	"dependencies": {
-		"amplify-adapter": "^0.2.0"
+		"@aws-amplify/auth": "^6.12.2",
+		"@aws-amplify/core": "^6.11.2",
+		"@aws-amplify/ui-components": "^1.9.40",
+		"amplify-adapter": "^0.2.0",
+		"aws-amplify": "^6.14.2"
 	}
 }

@@ -1,0 +1,83 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+## Svelte 5 Rules
+
+# Runes Overview
+Use runes for reactivity control
+Replace non-runes features with appropriate runes
+Understand the purpose and usage of each rune
+
+# $state
+Use $state() to declare reactive state
+Replace top-level let declarations with $state()
+For class fields, use $state() for reactive properties
+Note that only plain objects and arrays become deeply reactive
+
+# $state.raw
+Use $state.raw() for state that cannot be mutated, only reassigned
+Use for large arrays and objects to improve performance
+
+# $state.snapshot
+Use $state.snapshot() to take a static snapshot of $state
+Useful for logging or debugging state changes
+
+# $derived
+Use $derived() to declare derived state
+Replace reactive variables computed using $: with $derived()
+Make dependencies explicit in the derivation
+
+# $derived.by
+Use $derived.by() for complex derivations with a function
+Useful when the derivation logic is more complex
+
+# $effect
+Use $effect() for side effects when values change
+Replace $: {} blocks that trigger side effects
+Implement cleanup logic within the effect
+
+# $effect.pre
+Use $effect.pre() to run code before the DOM updates
+Replace beforeUpdate lifecycle method
+
+# $effect.tracking
+Use $effect.tracking() to check if code is running inside a tracking context
+Useful for debugging reactivity issues
+
+# $props
+Use $props() to declare component props
+Replace export let syntax for declaring props
+Destructure props at the top of the script section
+
+# $bindable
+Use $bindable() to declare bindable props
+Provide fallback values for bindable props
+
+# $inspect
+Use $inspect() as an equivalent to console.log that re-runs when its argument changes
+Useful for debugging reactive values
+
+# $host
+Use $host() to retrieve the this reference of the custom element
+Only available inside custom element components on the client-side
+
+# Snippets
+Use #snippet syntax to define reusable markup sections
+Render snippets with @render
+Destructure parameters for concise usage
+Follow lexical scoping rules for snippets
+Use snippets for recursive references when needed
+Pass snippets as props to components
+Use the children snippet for non-snippet content
+
+# Event Handling
+Use properties to attach event handlers
+Use shorthand syntax for event handlers
+Replace on: directive with property syntax
+Accept callback props instead of using createEventDispatcher
+Use wrapper functions instead of event modifiers
+Combine multiple handlers into one function
+Use onclickcapture for capture phase events
