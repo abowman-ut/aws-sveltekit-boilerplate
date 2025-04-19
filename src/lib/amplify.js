@@ -1,4 +1,3 @@
-'use client';
 import { Amplify } from 'aws-amplify';
 import { signIn, signUp, signOut, confirmSignUp, getCurrentUser } from 'aws-amplify/auth';
 
@@ -45,7 +44,7 @@ const amplifyConfig = {
 // Only configure Amplify on the client side
 if (typeof window !== 'undefined') {
     try {
-        Amplify.configure(amplifyConfig, { ssr: false });
+        Amplify.configure(amplifyConfig);
         console.log('✅ Amplify configured successfully');
         console.log('🚀 Amplify config:', amplifyConfig);
     } catch (error) {
