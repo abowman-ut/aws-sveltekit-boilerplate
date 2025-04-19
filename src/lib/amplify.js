@@ -47,6 +47,7 @@ if (typeof window !== 'undefined') {
     try {
         Amplify.configure(amplifyConfig, { ssr: false });
         console.log('✅ Amplify configured successfully');
+        console.log('🚀 Amplify config:', amplifyConfig);
     } catch (error) {
         console.error('❌ Error configuring Amplify:', error);
         throw new Error('Failed to configure Amplify. Please check your environment variables and configuration.');
