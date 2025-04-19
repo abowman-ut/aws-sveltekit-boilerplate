@@ -1,19 +1,37 @@
 import { Amplify } from 'aws-amplify';
 import { signIn, signUp, signOut, confirmSignUp, getCurrentUser } from 'aws-amplify/auth';
 
-// Note: This file runs in the browser, so we must use import.meta.env
-// process.env is not available in the browser
-const amplifyConfig = {
-    Auth: {
-        Cognito: {
-            // These values are replaced at build time by Vite
+// Get Cognito configuration based on environment
+const getCognitoConfig = () => {
+    if (import.meta.env.DEV) {
+        return {
             region: import.meta.env.VITE_COGNITO_REGION,
             userPoolId: import.meta.env.VITE_COGNITO_USER_POOL_ID,
             userPoolClientId: import.meta.env.VITE_COGNITO_CLIENT_ID,
+            domain: import.meta.env.VITE_COGNITO_DOMAIN
+        };
+    } else {
+        return {
+            region: process.env.VITE_COGNITO_REGION,
+            userPoolId: process.env.VITE_COGNITO_USER_POOL_ID,
+            userPoolClientId: process.env.VITE_COGNITO_CLIENT_ID,
+            domain: process.env.VITE_COGNITO_DOMAIN
+        };
+    }
+};
+
+const cognitoConfig = getCognitoConfig();
+
+const amplifyConfig = {
+    Auth: {
+        Cognito: {
+            region: cognitoConfig.region,
+            userPoolId: cognitoConfig.userPoolId,
+            userPoolClientId: cognitoConfig.userPoolClientId,
             authenticationFlowType: 'USER_PASSWORD_AUTH',
             signUpVerificationMethod: 'code',
             oauth: {
-                domain: import.meta.env.VITE_COGNITO_DOMAIN,
+                domain: cognitoConfig.domain,
                 scope: ['email', 'openid', 'profile'],
                 redirectSignIn: window.location.origin,
                 redirectSignOut: window.location.origin,
