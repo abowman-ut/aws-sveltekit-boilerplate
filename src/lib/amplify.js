@@ -1,26 +1,23 @@
+'use client';
 import { Amplify } from 'aws-amplify';
 import { signIn, signUp, signOut, confirmSignUp, getCurrentUser } from 'aws-amplify/auth';
 
-// Get Cognito configuration based on environment
-const getCognitoConfig = () => {
-    if (import.meta.env.DEV) {
-        return {
-            region: import.meta.env.VITE_COGNITO_REGION,
-            userPoolId: import.meta.env.VITE_COGNITO_USER_POOL_ID,
-            userPoolClientId: import.meta.env.VITE_COGNITO_CLIENT_ID,
-            domain: import.meta.env.VITE_COGNITO_DOMAIN
-        };
-    } else {
-        return {
-            region: process.env.VITE_COGNITO_REGION,
-            userPoolId: process.env.VITE_COGNITO_USER_POOL_ID,
-            userPoolClientId: process.env.VITE_COGNITO_CLIENT_ID,
-            domain: process.env.VITE_COGNITO_DOMAIN
-        };
-    }
+// Get Cognito configuration
+const cognitoConfig = {
+    region: import.meta.env.VITE_COGNITO_REGION,
+    userPoolId: import.meta.env.VITE_COGNITO_USER_POOL_ID,
+    userPoolClientId: import.meta.env.VITE_COGNITO_CLIENT_ID,
+    domain: import.meta.env.VITE_COGNITO_DOMAIN
 };
 
-const cognitoConfig = getCognitoConfig();
+// Validate required environment variables
+const requiredEnvVars = ['VITE_COGNITO_REGION', 'VITE_COGNITO_USER_POOL_ID', 'VITE_COGNITO_CLIENT_ID', 'VITE_COGNITO_DOMAIN'];
+const missingEnvVars = requiredEnvVars.filter(envVar => !import.meta.env[envVar]);
+
+if (missingEnvVars.length > 0) {
+    console.error('❌ Missing required environment variables:', missingEnvVars);
+    throw new Error(`Missing required environment variables: ${missingEnvVars.join(', ')}`);
+}
 
 const amplifyConfig = {
     Auth: {
@@ -44,7 +41,7 @@ const amplifyConfig = {
 // Only configure Amplify on the client side
 if (typeof window !== 'undefined') {
     try {
-        Amplify.configure(amplifyConfig);
+        Amplify.configure(amplifyConfig, { ssr: false });
         console.log('✅ Amplify configured successfully');
         console.log('🚀 Amplify config:', amplifyConfig);
     } catch (error) {
